@@ -1,3 +1,4 @@
+import Foundation
 import Nimble
 import Quick
 import Alamofire
@@ -58,11 +59,15 @@ final class EndpointClosureSpec: QuickSpec {
     }
 }
 
-final class SessionManagerMock: SessionManager {
+final class SessionManagerMock: Alamofire.Session {
 
     var uploadMultipartFormData: Alamofire.MultipartFormData?
 
-    override func upload(multipartFormData: @escaping (Alamofire.MultipartFormData) -> Void, usingThreshold encodingMemoryThreshold: UInt64, with urlRequest: URLRequestConvertible, encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)?) {
+    override func upload(multipartFormData: @escaping (Alamofire.MultipartFormData) -> Void,
+                usingThreshold encodingMemoryThreshold: UInt64 = Alamofire.MultipartUpload.encodingMemoryThreshold,
+                fileManager: FileManager = .default,
+                with request: URLRequestConvertible,
+                interceptor: Alamofire.RequestInterceptor? = nil) -> Alamofire.UploadRequest {
         let uploadMultipartFormData = Alamofire.MultipartFormData()
         multipartFormData(uploadMultipartFormData)
         self.uploadMultipartFormData = uploadMultipartFormData
