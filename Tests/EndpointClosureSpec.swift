@@ -67,7 +67,7 @@ final class SessionManagerMock: Alamofire.Session {
                 usingThreshold encodingMemoryThreshold: UInt64 = Alamofire.MultipartUpload.encodingMemoryThreshold,
                 fileManager: FileManager = .default,
                 with request: URLRequestConvertible,
-                interceptor: Alamofire.RequestInterceptor? = nil) -> Alamofire.UploadRequest {
+                interceptor: RequestInterceptor? = nil) -> UploadRequest {
         let uploadMultipartFormData = Alamofire.MultipartFormData()
         multipartFormData(uploadMultipartFormData)
         self.uploadMultipartFormData = uploadMultipartFormData
